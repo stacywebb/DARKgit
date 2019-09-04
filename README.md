@@ -1,4 +1,4 @@
-# DARKGit UI
+# DARKGit
 
 DARKGit is a native desktop Git app with JIRA, AppVeyor and other tools integrated into one UI.
 
