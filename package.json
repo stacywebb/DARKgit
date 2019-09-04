@@ -1,7 +1,7 @@
 {
-  "name": "metrogit",
-  "version": "0.4.0",
-  "description": "Metro themed git UI",
+  "name": "darkgit",
+  "version": "0.1.0",
+  "description": "Dark Theme + Git Client + Jira Client + AppVeyor = DARKgit",
   "main": "app/main.js",
   "scripts": {
     "start": "electron .",
@@ -12,11 +12,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Yamazaki93/MetroGit.git"
+    "url": "https://github.com/stacywebb/DARKgit.git"
   },
   "author": {
-    "name": "Michael Lu",
-    "email": "michaellu@rhodiumcode.com"
+    "name": "Stacy E. Webb",
+    "email": "stacywebb@gmail.com"
   },
   "license": "SEE LICENSE IN LICENSE",
   "devDependencies": {
@@ -24,8 +24,8 @@
     "electron-builder": "^20.10.0"
   },
   "build": {
-    "appId": "com.rhodiumcode.metrogit",
-    "productName": "MetroGit",
+    "appId": "com.stacywebb.darkgit",
+    "productName": "DARKgit",
     "directories": {
       "buildResources": "build"
     },
