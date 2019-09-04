@@ -33,7 +33,7 @@ To build global dependencies `electron-builder` and `@angular/cli` are needed.
 Next:
  
   1. `git clone https://github.com/stacywebb/DARKgit.git`
-  2. `cd MetroGit`
+  2. `cd DARKgit`
   3. `yarn install`
   4. `cd app/frontend`
   5. `yarn install`
