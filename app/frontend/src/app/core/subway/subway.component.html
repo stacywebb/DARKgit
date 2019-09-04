@@ -1,0 +1,11 @@
+<div class="subway-outer" *ngIf="commits && commits.length !== 0 && hasRepo">
+  <div class="d-flex subway-container">
+    <app-subway-station-annot></app-subway-station-annot>
+    <app-subway-map-visual [commits]="commits"></app-subway-map-visual>
+    <app-subway-stations [commits]="commits"></app-subway-stations>
+  </div>
+  <app-map-separator [commits]="commits"></app-map-separator>
+  <div class="eoh-container text-center mt-1">
+    <p><span class="mr-1 icon-info"></span>End of History</p>
+  </div>
+</div>

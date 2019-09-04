@@ -1,0 +1,121 @@
+<div class="commit-detail-info-container d-flex flex-column p-3" *ngIf="commit">
+  <div class="summary-container d-flex flex-column">
+    <div class="summary-header d-flex" *ngIf="!commit.virtual">
+      <div class="full-width">
+        <app-committer-card [author]="commit.author" [email]="commit.email" [time]="commit.date"></app-committer-card>
+      </div>
+      <div class="sha-container text-right">
+        <small>
+          <i class="icon-git-commit mr-1"></i>{{commit.sha.substring(0, 6)}}</small>
+        <br>
+        <small placement="left" [ngbTooltip]="tooltip? 'Parent commit' : ''">
+          <i class="icon-git-merge mr-1"></i>
+          <a href="javascript:void(0)" *ngFor="let parent of commit.parents" (click)="selection.select(parent)">
+            <span class="mr-1">{{parent.substring(0, 6)}}</span>
+          </a>
+        </small>
+      </div>
+    </div>
+    <div class="" *ngIf="commit.virtual">
+      <a class="btn btn-sm btn-danger" (click)="discardAll()">
+        <i class="icon-trash-2 mr-2"></i>Discard All Changes</a>
+    </div>
+    <div class="mt-3 d-flex flex-column message-container">
+      <div class="message-title-container p-2">
+        <h5 *ngIf="!commit.virtual">{{commit.message}}</h5>
+        <div class="d-flex">
+          <input *ngIf="commit.virtual" (keydown)="onKeyDown($event)" [(ngModel)]="newCommitMessage" (focus)="fillKeyIfNeeded()" name="newMessage"
+            type="text" placeholder="Commit Message...">
+          <h5 class="ml-1 word-count" *ngIf="newCommitMessage.length > 30 && commit.virtual" [class.text-warning]="newCommitMessage.length > 50">{{50 - newCommitMessage.length}}</h5>
+        </div>
+      </div>
+      <div class="message-content-container p-2">
+        <ng-container *ngIf="commit.detail && !commit.virtual">{{commit.detail}}</ng-container>
+        <textarea *ngIf="commit.virtual" (keydown)="onKeyDown($event)" [(ngModel)]="newCommitDetail" (change)="setCommitMessages()"
+          name="newDetail"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="modification-summary-container mt-2" *ngIf="!commit.virtual">
+    <app-file-counts #commitFileCounts [modified]="commit.fileSummary.modified" [newCount]="commit.fileSummary.added" [deleted]="commit.fileSummary.deleted" [renamed]="commit.fileSummary.renamed"></app-file-counts>
+  </div>
+  <div class="mt-2 d-flex" *ngIf="!commit.virtual">
+    <app-commit-file-list #commitFilesList [files]="commit.files"></app-commit-file-list>
+  </div>
+  <div class="mt-2 file-details-container d-flex flex-column" *ngIf="commit.virtual">
+    <div class="d-flex mb-2 flex-no-shrink">
+      <div class="modification-summary-container flex-no-shrink" *ngIf="commit.unstagedSummary">
+        <app-file-counts [modified]="commit.unstagedSummary.modified" [newCount]="commit.unstagedSummary.newCount" [deleted]="commit.unstagedSummary.deleted" [renamed]="commit.unstagedSummary.renamed"></app-file-counts>
+      </div>
+      <div class="full-width">
+        <h5>Unstaged Files</h5>
+      </div>
+      <a class="btn-success btn-sm btn" [class.disabled]="!commit.unstaged.length" (click)="stageAll()">Stage All</a>
+    </div>
+    <div class="modified-file-list p-2">
+      <div class="modified-file-entry p-1 d-flex" *ngFor="let file of commit.unstaged; trackBy: wipFileTrack" (click)="openFileDetails(file.path, 'workdir')">
+        <div>
+          <span class="mr-2 text-warning" *ngIf="file.isModified">
+            <i class="icon-file-text"></i>
+          </span>
+          <span class="mr-2 text-success" *ngIf="file.isNew && !file.isRenamed">
+            <i class="icon-file-plus"></i>
+          </span>
+          <span class="mr-2 text-danger" *ngIf="file.isDeleted && !file.isRenamed">
+            <i class="icon-file-minus"></i>
+          </span>
+          <span class="mr-2 text-primary" *ngIf="file.isRenamed">
+            <i class="icon-file"></i>
+          </span>{{getShortenedPath(file.path)}}
+        </div>
+        <div class="action-button">
+          <a class="btn btn-success btn-sm" (click)="stage(file.path, $event)">Stage File</a>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex mb-2 mt-2 flex-no-shrink">
+      <div class="modification-summary-container flex-no-shrink" *ngIf="commit.stagedSummary">
+        <app-file-counts [modified]="commit.stagedSummary.modified" [newCount]="commit.stagedSummary.newCount" [deleted]="commit.stagedSummary.deleted" [renamed]="commit.stagedSummary.renamed"></app-file-counts>
+      </div>
+      <div class="full-width">
+        <h5>Staged Files</h5>
+      </div>
+      <a class="btn-danger btn-sm btn" [class.disabled]="!commit.staged.length" (click)="unstageAll()">Unstage All</a>
+    </div>
+    <div class="modified-file-list p-2">
+      <div class="modified-file-entry p-1" *ngFor="let file of commit.staged; trackBy: wipFileTrack" (click)="openFileDetails(file.path, 'tree')">
+        <div>
+          <span class="mr-2 text-warning" *ngIf="file.isModified">
+            <i class="icon-file-text"></i>
+          </span>
+          <span class="mr-2 text-success" *ngIf="file.isNew && !file.isRenamed">
+            <i class="icon-file-plus"></i>
+          </span>
+          <span class="mr-2 text-danger" *ngIf="file.isDeleted && !file.isRenamed">
+            <i class="icon-file-minus"></i>
+          </span>
+          <span class="mr-2 text-primary" *ngIf="file.isRenamed">
+            <i class="icon-file"></i>
+          </span>{{getShortenedPath(file.path)}}
+        </div>
+        <div class="action-button">
+          <a class="btn btn-danger btn-sm" (click)="unstage(file.path, $event)">Unstage File</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-2 action-button-container" *ngIf="commit.virtual">
+    <a class="btn" [class.btn-success]="!committing && newCommitMessage.length" [class.btn-default]="committing || !newCommitMessage.length" [class.disabled]="!newCommitMessage.length || committing"
+      (click)="commitChanges()">
+      <span *ngIf="!committing && commit.staged.length && newCommitMessage.length">Commit Staged Changes</span>
+      <span *ngIf="!committing && !newCommitMessage.length">Please Enter A Commit Message</span>
+      <span *ngIf="!committing && newCommitMessage.length && !commit.staged.length">Commit All Files</span>
+      <app-spinner [size]="20" [enabled]="committing"></app-spinner>
+    </a>
+  </div>
+</div>
+<div class="empty-container d-flex flex-column justify-content-center align-items-center" [class.hidden]="!commit">
+  <div>
+    <h4>Select a commit from the map to see details</h4>
+  </div>
+</div>

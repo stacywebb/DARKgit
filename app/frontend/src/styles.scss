@@ -1,0 +1,144 @@
+@font-face {
+    font-family: 'Lato';
+    src: url('assets/fonts/Lato-Regular.ttf');
+}
+
+body {
+    user-select: none;
+}
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+    color: var(--light);
+}
+
+/* width */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+
+::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+    background: var(--gray);
+}
+
+/* Handle on hover */
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gray);
+}
+
+.smooth {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.smooth-1 {
+    -webkit-transition: all 0.1s ease;
+    -moz-transition: all 0.1s ease;
+    -ms-transition: all 0.1s ease;
+    -o-transition: all 0.1s ease;
+    transition: all 0.1s ease;
+}
+
+// notification style
+.simple-notification.success .sn-progress-loader span {
+    background: #28a745;
+}
+
+.simple-notification.error .sn-progress-loader span {
+    background: #dc3545;
+}
+
+.simple-notification.alert .sn-progress-loader span {
+    background: #ffc107;
+}
+
+.simple-notification.info .sn-progress-loader span {
+    background: #007bff;
+}
+
+.simple-notification.warn .sn-progress-loader span {
+    background: #ffc107;
+}
+
+tag-input {
+    width: 100%;
+}
+
+.ng2-tag-input__text-input {
+    background: transparent !important;
+    color: #FFF !important;
+}
+
+tag-input tag:hover {
+    box-shadow: none !important;
+}
+
+context-menu-content {
+    ul {
+        padding: 0 !important;
+        border: solid 1px #000;
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+        background: var(--gray-dark) !important;
+        li {
+            cursor: pointer;
+            padding: 3px;
+            position: relative;
+            a {
+                display: block;
+                height: 100%;
+                width: 100%;
+                color: #fff;
+                font-size: 13px;
+                &:hover{
+                    text-decoration: transparent;
+                    color: #fff;
+                }
+            }
+            &:hover {
+                background: rgba(0, 0, 0, 0.2);
+            }
+        }
+        &:focus{
+            outline: none;
+        }
+    }
+    .separater{
+        border: solid 1px #000;
+        width: 100%;
+        height: 1px;
+    }
+}
+
+.cfp-hotkeys-close{
+    border: none !important;
+    &:hover{
+        background: transparent !important;
+        color: var(--blue) !important;
+    }
+}
+
+.jira-issue-macro {
+    background: var(--gray-dark);
+    padding: 2px;
+    border-radius: 4px;
+    a img {
+        margin-top: -3px;
+    }
+}
+
+.popover-body{
+    color: var(--primary) !important;
+}

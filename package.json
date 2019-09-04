@@ -1,0 +1,68 @@
+{
+  "name": "metrogit",
+  "version": "0.4.0",
+  "description": "Metro themed git UI",
+  "main": "app/main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "./test.sh",
+    "postinstall": "electron-builder install-app-deps",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder --publish never"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Yamazaki93/MetroGit.git"
+  },
+  "author": {
+    "name": "Michael Lu",
+    "email": "michaellu@rhodiumcode.com"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "devDependencies": {
+    "electron": "^1.8.4",
+    "electron-builder": "^20.10.0"
+  },
+  "build": {
+    "appId": "com.rhodiumcode.metrogit",
+    "productName": "MetroGit",
+    "directories": {
+      "buildResources": "build"
+    },
+    "publish": {
+      "provider": "github"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "build/icon.icns",
+      "category": "public.app-category.developer-tools",
+      "publish": {
+        "provider": "github"
+      }
+    },
+    "linux": {
+      "target": "deb",
+      "category": "Development",
+      "publish": {
+        "provider": "github"
+      }
+    },
+    "nsis": {
+      "license": "../LICENSE"
+    },
+    "extends": null
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "electron-updater": "^3.0.3",
+    "get-folder-size": "^2.0.0",
+    "keytar": "^4.2.1",
+    "nodegit": "^0.22.0",
+    "read-last-line": "^1.1.0",
+    "uuid": "^3.2.1"
+  }
+}
