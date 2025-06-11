@@ -20,7 +20,7 @@
   },
   "license": "SEE LICENSE IN LICENSE",
   "devDependencies": {
-    "electron": ">=1.8.4",
+    "electron": "22.3.25",
     "electron-builder": ">=20.10.0"
   },
   "build": {
@@ -57,8 +57,8 @@
     "extends": null
   },
   "dependencies": {
-    "axios": ">=0.21.1",
-    "electron-updater": ">=3.0.3",
+    "axios": "0.30.0",
+    "electron-updater": "6.3.0-alpha.6",
     "get-folder-size": "^2.0.0",
     "keytar": "^4.2.1",
     "nodegit": "^0.22.0",
